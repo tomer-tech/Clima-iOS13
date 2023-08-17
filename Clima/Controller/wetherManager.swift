@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 protocol WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager : WeatherManager, weather : WeatherModel) // reqirements of protocol
     func didFailWithError(error: Error)
@@ -18,13 +19,16 @@ struct WeatherManager{
     // var location
     // var units
     // somerthing else maybe
-    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=xxxxxxx&"
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=36a8728aa9e41f58f4fa8dcc4050ffa4&"
     var delegate : WeatherManagerDelegate? //set delegate as an optional wmd.
     
     func fetchWeather(cityName : String) { //method takes input called cityname which is a string data type
         let urlString = "\(weatherURL)&q=\(cityName)&units=imperial" //urlstring for the specific city and imperial temp display
         performRequest(with: urlString)}
-    
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees){
+        let urlString = "\(weatherURL)&units=imperial&lat=\(latitude)&lon=\(longitude)" //urlstring for the specific city and imperial temp display
+        performRequest(with: urlString)}
+
     func performRequest(with urlString: String) {  //do networking
         if let url = URL(string: urlString) { //optinal binding
             let session = URLSession(configuration: .default) //create URLSession
@@ -38,7 +42,6 @@ struct WeatherManager{
                         self.delegate?.didUpdateWeather(self, weather: weather) //inside closure, delegate needs self keyword
                     }
                 }
-                
             }
                 task.resume()//Start Task
             }
@@ -67,3 +70,4 @@ struct WeatherManager{
     }
     
 }
+
