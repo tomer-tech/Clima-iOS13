@@ -18,7 +18,7 @@ struct WeatherManager{
     // var location
     // var units
     // somerthing else maybe
-    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=36a8728aa9e41f58f4fa8dcc4050ffa4&"
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=xxxxxxx&"
     var delegate : WeatherManagerDelegate? //set delegate as an optional wmd.
     
     func fetchWeather(cityName : String) { //method takes input called cityname which is a string data type
